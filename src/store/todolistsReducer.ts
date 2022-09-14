@@ -1,30 +1,8 @@
 import {v1} from "uuid";
-import {FilterType, TaskType} from "../Todolist";
+import {FilterType} from "../Todolist";
+import {TodolistsType} from "../components/TodolistsList";
 
-const initialState = [
-    {
-        title: "What",
-        todolistId: v1(),
-        filter: "all" as FilterType,
-        tasks: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "ReactJS", isDone: false},
-            {id: v1(), title: "ReactJS", isDone: false},
-            {id: v1(), title: "ReactJS", isDone: false}
-        ] as TaskType[]
-    },
-    {
-        title: "sldjskf",
-        todolistId: v1(),
-        filter: "all" as FilterType,
-        tasks: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "ReactJS", isDone: false}
-        ] as TaskType[]
-    }
-]
+const initialState:TodolistsType = []
 type InitialStateType = typeof initialState
 
 export const todolistsReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
