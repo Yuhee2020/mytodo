@@ -4,6 +4,7 @@ import {TextField} from "@mui/material";
 type PropsType = {
     title: string
     changeTitle: (title: string) => void
+    disabled:boolean
 }
 
 export const EditSpan = (props: PropsType) => {
@@ -19,7 +20,7 @@ export const EditSpan = (props: PropsType) => {
         e.key === "Enter" && setEditMode()
     }
 
-    return edit
+    return edit && !props.disabled
         ? <TextField
             onChange={(e) => setNewTitle(e.currentTarget.value)}
             value={newTitle}

@@ -4,6 +4,8 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 
 type PropsType = {
     addItem: (title: string) => void
+    label:string
+    disabled:boolean
 }
 
 export const AddItemForm = (props: PropsType) => {
@@ -29,16 +31,19 @@ export const AddItemForm = (props: PropsType) => {
     return (
         <div>
             <TextField
+                disabled={props.disabled}
                 color='success'
                 onChange={onChangeHandler}
                 value={title}
                 onKeyPress={onKeyPressHandler}
                 error={!!error}
-                label={error}
+                label={props.label}
                 size='small'
+                helperText={error}
             />
 
             <IconButton
+                disabled={props.disabled}
                 color='success'
                 onClick={addItem}
                 size='small'>
