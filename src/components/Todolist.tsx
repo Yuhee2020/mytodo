@@ -52,13 +52,13 @@ export const Todolist = (props: PropsType) => {
     }
     return (
         <div style={{width: "280px"}}>
-            <h3><EditSpan title={props.todolist.title} changeTitle={changeTodolistTitle}
+            <h3 style={{textAlign:"center"}}><EditSpan title={props.todolist.title} changeTitle={changeTodolistTitle}
                           disabled={props.todolist.entityStatus === "loading"}/>
                 <IconButton onClick={removeTodolist} disabled={props.todolist.entityStatus === "loading"}><DeleteIcon/></IconButton>
             </h3>
             <AddItemForm addItem={addTask} label={"enter task title"}
                          disabled={props.todolist.entityStatus === "loading"}/>
-            <div>{tasksForTodolist.map(el => {
+            <div style={{marginTop:"8px"}}>{tasksForTodolist.map(el => {
                 return (
                     <Task key={el.id} task={el} todolistId={props.todolist.todolistId}/>
                 )

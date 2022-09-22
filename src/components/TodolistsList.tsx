@@ -8,6 +8,7 @@ import {StateType} from "../store/store";
 import {addTodolistTC, getTodolistsTC} from "../store/todolistsReducer";
 import {TaskType} from "../api/api";
 import {AppStatusType} from "../store/appReducer";
+import {Navigate} from "react-router-dom";
 
 
 export type TodolistDomainType = {
@@ -24,8 +25,10 @@ export type TodolistsType = TodolistDomainType[]
 
 export const TodolistsList = () => {
     const appStatus=useSelector<StateType, AppStatusType>(state => state.app.appStatus)
+    const isLoggedIn = useSelector<StateType, boolean>(state =>state.app.isLoggedIn)
     const dispatch = useDispatch()
     useEffect(() => {
+        if (!isLoggedIn){return}
         dispatch(getTodolistsTC() as any)
     }, [])
 
@@ -33,6 +36,9 @@ export const TodolistsList = () => {
 
     const addTodolist = (title: string) => {
         dispatch(addTodolistTC(title) as any)
+    }
+    if (!isLoggedIn) {
+        return <Navigate to={"/login"}/>
     }
     return (
         <>
@@ -44,7 +50,7 @@ export const TodolistsList = () => {
                 </Grid>
             </Grid>
             <Grid
-                spacing={4}
+                spacing={3}
                 container
                 direction="row"
                 justifyContent="space-evenly"

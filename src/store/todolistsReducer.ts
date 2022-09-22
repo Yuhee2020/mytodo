@@ -218,9 +218,21 @@ export const getTodolistsTC = () => {
             .catch((err) => {
                 dispatch(setAppErrorAC(err.message))
             })
-
     }
 }
+export const getTasksTC = (todolistId: string) => {
+    return (dispatch: Dispatch) => {
+        todolistAPI.getTasks(todolistId)
+            .then(res => {
+                dispatch(setTasksAC(todolistId, res.data.items))
+            })
+            .catch((err) => {
+                dispatch(setAppErrorAC(err.message))
+            })
+            .finally(() => dispatch(setAppStatusAC("idle")))
+    }
+}
+
 
 export const addTodolistTC = (title: string) => {
     return (dispatch: Dispatch) => {
@@ -277,18 +289,6 @@ export const changeTodolistTileTC = (todolistId: string, title: string) => {
     }
 }
 
-export const getTasksTC = (todolistId: string) => {
-    return (dispatch: Dispatch) => {
-        todolistAPI.getTasks(todolistId)
-            .then(res => {
-                dispatch(setTasksAC(todolistId, res.data.items))
-            })
-            .catch((err) => {
-                dispatch(setAppErrorAC(err.message))
-            })
-            .finally(() => dispatch(setAppStatusAC("idle")))
-    }
-}
 
 export const removeTaskTC = (todolistId: string, taskId: string) => {
     return (dispatch: Dispatch) => {
@@ -301,7 +301,6 @@ export const removeTaskTC = (todolistId: string, taskId: string) => {
                 } else {
                     handleServerAppError(res.data, dispatch)
                 }
-
             })
             .catch((err) => {
                 dispatch(setAppErrorAC(err.message))

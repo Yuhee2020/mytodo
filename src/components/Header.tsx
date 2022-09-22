@@ -7,12 +7,17 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {LinearProgress} from "@mui/material";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {StateType} from "../store/store";
-import {AppStatusType} from "../store/appReducer";
+import {AppStatusType, logoutTC} from "../store/appReducer";
 
 export const Header=()=> {
+    const dispatch = useDispatch()
+    const isLoggedIn = useSelector<StateType, boolean>(state =>state.app.isLoggedIn)
     const status=useSelector<StateType, AppStatusType>(state => state.app.appStatus)
+    const onClickHandler=()=>{
+       dispatch(logoutTC()as any)
+    }
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar color='default' position="fixed">
@@ -29,10 +34,11 @@ export const Header=()=> {
                     <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
                         Todolist
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {isLoggedIn && <Button color="success" onClick={onClickHandler}>LOGOUT</Button>}
                 </Toolbar>
                 {status==="loading" && <LinearProgress color={"success"}/>}
             </AppBar>
+
         </Box>
     );
 }

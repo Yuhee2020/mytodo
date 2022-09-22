@@ -1,0 +1,9 @@
+
+.error {
+    margin-top: 50px;
+    width: 800px;
+    height: 564px;
+    background-image: url("404.png");
+    margin-left: auto;
+    margin-right: auto
+}

@@ -22,6 +22,7 @@ export const EditSpan = (props: PropsType) => {
 
     return edit && !props.disabled
         ? <TextField
+            style={{width:"198px"}}
             onChange={(e) => setNewTitle(e.currentTarget.value)}
             value={newTitle}
             autoFocus
