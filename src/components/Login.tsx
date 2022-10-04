@@ -15,9 +15,8 @@ import {
     TextField
 } from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../store/appReducer";
-import {StateType} from "../store/store";
+import {useAppDispatch, useAppSelector} from "../store/store";
 
 
 type FormikErrorType = {
@@ -32,8 +31,8 @@ type FormikValuesType = {
 }
 
 const Login = () => {
-    const dispatch = useDispatch()
-    const isLoggedIn = useSelector<StateType, boolean>(state =>state.app.isLoggedIn)
+    const dispatch = useAppDispatch()
+    const isLoggedIn = useAppSelector(state =>state.app.isLoggedIn)
     const [showPassword, setShowPassword] = useState(false)
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword)
@@ -66,7 +65,7 @@ const Login = () => {
         },
         validate,
         onSubmit: values => {
-            dispatch(loginTC(values)as any)
+            dispatch(loginTC(values))
             formik.resetForm()
         },
     });

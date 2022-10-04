@@ -3,8 +3,8 @@ import Grid from "@mui/material/Grid";
 import {Paper} from "@mui/material";
 import {AddItemForm} from "./common/AddItemForm";
 import {FilterType, Todolist} from "./Todolist";
-import {useDispatch, useSelector} from "react-redux";
-import {StateType} from "../store/store";
+import {useSelector} from "react-redux";
+import {StateType, useAppDispatch, useAppSelector} from "../store/store";
 import {addTodolistTC, getTodolistsTC} from "../store/todolistsReducer";
 import {TaskType} from "../api/api";
 import {AppStatusType} from "../store/appReducer";
@@ -24,18 +24,18 @@ export type TodolistDomainType = {
 export type TodolistsType = TodolistDomainType[]
 
 export const TodolistsList = () => {
-    const appStatus=useSelector<StateType, AppStatusType>(state => state.app.appStatus)
-    const isLoggedIn = useSelector<StateType, boolean>(state =>state.app.isLoggedIn)
-    const dispatch = useDispatch()
+    const appStatus=useAppSelector(state => state.app.appStatus)
+    const isLoggedIn = useAppSelector(state =>state.app.isLoggedIn)
+    const dispatch = useAppDispatch()
     useEffect(() => {
         if (!isLoggedIn){return}
-        dispatch(getTodolistsTC() as any)
+        dispatch(getTodolistsTC())
     }, [])
 
     const todolists = useSelector<StateType, TodolistsType>(state => state.todolists)
 
     const addTodolist = (title: string) => {
-        dispatch(addTodolistTC(title) as any)
+        dispatch(addTodolistTC(title))
     }
     if (!isLoggedIn) {
         return <Navigate to={"/login"}/>

@@ -7,16 +7,16 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {LinearProgress} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
-import {StateType} from "../store/store";
+import {useSelector} from "react-redux";
+import {StateType, useAppDispatch, useAppSelector} from "../store/store";
 import {AppStatusType, logoutTC} from "../store/appReducer";
 
 export const Header=()=> {
-    const dispatch = useDispatch()
-    const isLoggedIn = useSelector<StateType, boolean>(state =>state.app.isLoggedIn)
+    const dispatch = useAppDispatch()
+    const isLoggedIn = useAppSelector(state =>state.app.isLoggedIn)
     const status=useSelector<StateType, AppStatusType>(state => state.app.appStatus)
     const onClickHandler=()=>{
-       dispatch(logoutTC()as any)
+       dispatch(logoutTC())
     }
     return (
         <Box sx={{ flexGrow: 1 }}>

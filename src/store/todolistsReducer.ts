@@ -1,9 +1,8 @@
 import {FilterType} from "../components/Todolist";
 import {TodolistDomainType, TodolistsType} from "../components/TodolistsList";
 import {TaskStatuses, TaskType, todolistAPI, TodolistType} from "../api/api";
-import {Dispatch} from "redux";
 import {AppStatusType, setAppErrorAC, setAppStatusAC} from "./appReducer";
-import {StateType} from "./store";
+import {AppThunk} from "./store";
 import {handleServerAppError} from "../utils/utils";
 
 const initialState: TodolistsType = []
@@ -208,8 +207,8 @@ export const changeTaskEntityStatusAC = (todolistId: string, taskId: string, sta
 
 //////////////////////thunk
 
-export const getTodolistsTC = () => {
-    return (dispatch: Dispatch) => {
+export const getTodolistsTC = ():AppThunk => {
+    return (dispatch) => {
         dispatch(setAppStatusAC("loading"))
         todolistAPI.getTodolists()
             .then(res => {
@@ -220,8 +219,8 @@ export const getTodolistsTC = () => {
             })
     }
 }
-export const getTasksTC = (todolistId: string) => {
-    return (dispatch: Dispatch) => {
+export const getTasksTC = (todolistId: string):AppThunk => {
+    return (dispatch) => {
         todolistAPI.getTasks(todolistId)
             .then(res => {
                 dispatch(setTasksAC(todolistId, res.data.items))
@@ -234,8 +233,8 @@ export const getTasksTC = (todolistId: string) => {
 }
 
 
-export const addTodolistTC = (title: string) => {
-    return (dispatch: Dispatch) => {
+export const addTodolistTC = (title: string):AppThunk => {
+    return (dispatch) => {
         dispatch(setAppStatusAC("loading"))
         todolistAPI.createTodolist(title)
             .then(res => {
@@ -252,8 +251,8 @@ export const addTodolistTC = (title: string) => {
     }
 }
 
-export const removeTodolistTC = (todolistId: string) => {
-    return (dispatch: Dispatch) => {
+export const removeTodolistTC = (todolistId: string):AppThunk => {
+    return (dispatch) => {
         dispatch(changeTodolistEntityStatusAC(todolistId, "loading"))
         dispatch(setAppStatusAC("loading"))
         todolistAPI.deleteTodolist(todolistId)
@@ -271,8 +270,8 @@ export const removeTodolistTC = (todolistId: string) => {
     }
 }
 
-export const changeTodolistTileTC = (todolistId: string, title: string) => {
-    return (dispatch: Dispatch) => {
+export const changeTodolistTileTC = (todolistId: string, title: string):AppThunk => {
+    return (dispatch) => {
         dispatch(setAppStatusAC("loading"))
         todolistAPI.updateTodolist(todolistId, title)
             .then(res => {
@@ -290,8 +289,8 @@ export const changeTodolistTileTC = (todolistId: string, title: string) => {
 }
 
 
-export const removeTaskTC = (todolistId: string, taskId: string) => {
-    return (dispatch: Dispatch) => {
+export const removeTaskTC = (todolistId: string, taskId: string):AppThunk => {
+    return (dispatch) => {
         dispatch(changeTaskEntityStatusAC(todolistId, taskId, "loading"))
         dispatch(setAppStatusAC("loading"))
         todolistAPI.deleteTask(todolistId, taskId)
@@ -312,8 +311,8 @@ export const removeTaskTC = (todolistId: string, taskId: string) => {
     }
 }
 
-export const addTaskTC = (todolistId: string, title: string) => {
-    return (dispatch: Dispatch) => {
+export const addTaskTC = (todolistId: string, title: string):AppThunk => {
+    return (dispatch) => {
         dispatch(changeTodolistEntityStatusAC(todolistId, "loading"))
         dispatch(setAppStatusAC("loading"))
         todolistAPI.createTask(todolistId, title)
@@ -334,8 +333,8 @@ export const addTaskTC = (todolistId: string, title: string) => {
     }
 }
 
-export const updateTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses) => {
-    return (dispatch: Dispatch, getState: () => StateType) => {
+export const updateTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses):AppThunk => {
+    return (dispatch, getState) => {
         dispatch(changeTaskEntityStatusAC(todolistId, taskId, "loading"))
         dispatch(setAppStatusAC("loading"))
         const task = getState().todolists.filter(tl => tl.todolistId === todolistId)[0].tasks.filter(ts => ts.id === taskId)[0]
@@ -366,8 +365,8 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
     }
 }
 
-export const updateTaskTitleTC = (todolistId: string, taskId: string, title: string) => {
-    return (dispatch: Dispatch, getState: () => StateType) => {
+export const updateTaskTitleTC = (todolistId: string, taskId: string, title: string):AppThunk => {
+    return (dispatch, getState) => {
         dispatch(changeTaskEntityStatusAC(todolistId, taskId, "loading"))
         dispatch(setAppStatusAC("loading"))
         const task = getState().todolists.filter(tl => tl.todolistId === todolistId)[0].tasks.filter(ts => ts.id === taskId)[0]

@@ -2,9 +2,9 @@ import React, {ChangeEvent} from 'react';
 import {Checkbox, IconButton} from "@mui/material";
 import {EditSpan} from "./common/EditSpan";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {useDispatch} from "react-redux";
 import {removeTaskTC, updateTaskStatusTC, updateTaskTitleTC} from "../store/todolistsReducer";
 import {TaskStatuses, TaskType} from "../api/api";
+import {useAppDispatch} from "../store/store";
 
 type PropsType = {
     task: TaskType
@@ -12,7 +12,7 @@ type PropsType = {
 }
 
 export const Task: React.FC<PropsType> = ({task, todolistId}) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const onClickHandler = () => {
         dispatch(removeTaskTC(todolistId, task.id) as any)
     }

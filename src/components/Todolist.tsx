@@ -5,9 +5,9 @@ import {EditSpan} from "./common/EditSpan";
 import {Button, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Task} from "./Task";
-import {useDispatch} from "react-redux";
 import {addTaskTC, changeFilterAC, changeTodolistTileTC, getTasksTC, removeTodolistTC} from "../store/todolistsReducer";
 import {TaskStatuses} from "../api/api";
+import {useAppDispatch} from "../store/store";
 
 
 export type FilterType = 'all' | 'completed' | 'active'
@@ -19,13 +19,13 @@ type PropsType = {
 
 
 export const Todolist = (props: PropsType) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     useEffect(() => {
-        dispatch(getTasksTC(props.todolist.todolistId) as any)
+        dispatch(getTasksTC(props.todolist.todolistId))
     }, [])
 
     const addTask = (title: string) => {
-        dispatch(addTaskTC(props.todolist.todolistId, title) as any)
+        dispatch(addTaskTC(props.todolist.todolistId, title))
     }
 
     const onClickAllHandler = () => {
@@ -38,10 +38,10 @@ export const Todolist = (props: PropsType) => {
         dispatch(changeFilterAC(props.todolist.todolistId, "active"))
     }
     const removeTodolist = () => {
-        dispatch(removeTodolistTC(props.todolist.todolistId) as any)
+        dispatch(removeTodolistTC(props.todolist.todolistId))
     }
     const changeTodolistTitle = (title: string) => {
-        dispatch(changeTodolistTileTC(props.todolist.todolistId, title) as any)
+        dispatch(changeTodolistTileTC(props.todolist.todolistId, title))
     }
     let tasksForTodolist = props.todolist.tasks
     if (props.todolist.filter === "active") {

@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {authAPI, LoginParamsType} from "../api/api";
 import {handleServerAppError} from "../utils/utils";
+import {AppThunk} from "./store";
 
 const initialState={
     appStatus: "idle" as AppStatusType,
@@ -92,8 +93,8 @@ export const logoutTC=()=>{
     }
 }
 
-export const initializeAppTC=()=>{
-    return (dispatch:Dispatch)=>{
+export const initializeAppTC=():AppThunk=>{
+    return (dispatch)=>{
         dispatch(setAppStatusAC("loading"))
         authAPI.authMe()
             .then((res)=>{
