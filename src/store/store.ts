@@ -1,16 +1,19 @@
-import {AnyAction, combineReducers, createStore, applyMiddleware} from "redux";
+import {AnyAction, combineReducers} from "redux";
 import {todolistsReducer} from "./todolistsReducer";
-import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
+import thunkMiddleware, {ThunkAction, ThunkDispatch,} from "redux-thunk";
 import {appReducer} from "./appReducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import {configureStore} from "@reduxjs/toolkit";
 
 
 export const rootReducer = combineReducers({
     todolists: todolistsReducer,
     app:appReducer
 })
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunkMiddleware)})
 
-export const store = createStore(rootReducer, applyMiddleware(thunk))
 
 // @ts-ignore
 window.store = store
