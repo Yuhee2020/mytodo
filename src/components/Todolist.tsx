@@ -5,7 +5,7 @@ import {EditSpan} from "./common/EditSpan";
 import {Button, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Task} from "./Task";
-import {addTaskTC, changeFilterAC, changeTodolistTileTC, getTasksTC, removeTodolistTC} from "../store/todolistsReducer";
+import {addTaskTC, changeFilter, changeTodolistTitleTC, getTasksTC, removeTodolistTC} from "../store/todolistsReducer";
 import {TaskStatuses} from "../api/api";
 import {useAppDispatch} from "../store/store";
 
@@ -29,19 +29,19 @@ export const Todolist = (props: PropsType) => {
     }
 
     const onClickAllHandler = () => {
-        dispatch(changeFilterAC(props.todolist.todolistId, "all"))
+        dispatch(changeFilter({todolistId:props.todolist.todolistId,value: "all"}))
     }
     const onClickCompletedHandler = () => {
-        dispatch(changeFilterAC(props.todolist.todolistId, "completed"))
+        dispatch(changeFilter({todolistId:props.todolist.todolistId, value:"completed"}))
     }
     const onClickActiveHandler = () => {
-        dispatch(changeFilterAC(props.todolist.todolistId, "active"))
+        dispatch(changeFilter({todolistId:props.todolist.todolistId, value:"active"}))
     }
     const removeTodolist = () => {
         dispatch(removeTodolistTC(props.todolist.todolistId))
     }
     const changeTodolistTitle = (title: string) => {
-        dispatch(changeTodolistTileTC(props.todolist.todolistId, title))
+        dispatch(changeTodolistTitleTC(props.todolist.todolistId, title))
     }
     let tasksForTodolist = props.todolist.tasks
     if (props.todolist.filter === "active") {
