@@ -17,6 +17,7 @@ import {
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {loginTC} from "../store/appReducer";
 import {useAppDispatch, useAppSelector} from "../store/store";
+import Typography from "@mui/material/Typography";
 
 
 type FormikErrorType = {
@@ -32,7 +33,7 @@ type FormikValuesType = {
 
 const Login = () => {
     const dispatch = useAppDispatch()
-    const isLoggedIn = useAppSelector(state =>state.app.isLoggedIn)
+    const isLoggedIn = useAppSelector(state => state.app.isLoggedIn)
     const [showPassword, setShowPassword] = useState(false)
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword)
@@ -75,8 +76,13 @@ const Login = () => {
     return (
         <Grid container justifyContent={'center'}>
             <Grid item marginTop={'80px'} textAlign={"center"} width={"400px"}>
-                <Paper elevation={14} style={{padding: "30px", height:"430px"}} >
+                <Paper elevation={14} style={{padding: "30px", height: "430px"}}>
                     <form onSubmit={formik.handleSubmit}>
+                        <Typography variant={"body2"} marginTop={"10px"}>
+                            To log use common test account credentials:
+                            <div>Email: free@samuraijs.com</div>
+                            <div>Password: free</div>
+                        </Typography>
                         <FormControl fullWidth>
                             <FormLabel style={{textAlign: "center"}}>
                                 <h2>Sign in</h2>
@@ -119,7 +125,8 @@ const Login = () => {
                                                       checked={formik.values.rememberMe}
                                                       {...formik.getFieldProps("rememberMe")}
                                                   />}/>
-                                <Button style={{marginTop: "40px"}} type={'submit'} variant={'contained'} color={'success'} fullWidth>
+                                <Button style={{marginTop: "40px"}} type={'submit'} variant={'contained'}
+                                        color={'success'} fullWidth>
                                     Sign In
                                 </Button>
                             </FormGroup>
