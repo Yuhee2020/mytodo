@@ -14,25 +14,29 @@ type PropsType = {
 export const Task: React.FC<PropsType> = ({task, todolistId}) => {
     const dispatch = useAppDispatch()
     const onClickHandler = () => {
-        dispatch(removeTaskTC(todolistId, task.id) as any)
+        dispatch(removeTaskTC({todolistId, taskId: task.id}) as any)
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(updateTaskStatusTC(todolistId, task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New) as any)
+        dispatch(updateTaskStatusTC({
+            todolistId,
+            taskId: task.id,
+            status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
+        }))
     }
     const changeTaskTitle = (title: string) => {
-        dispatch(updateTaskTitleTC(todolistId, task.id, title) as any)
+        dispatch(updateTaskTitleTC({todolistId, taskId:task.id, title}) as any)
     }
 
     return (
         <div key={task.id}>
             <Checkbox
-                disabled={task.entityStatus==="loading"}
+                disabled={task.entityStatus === "loading"}
                 color='success'
                 onChange={onChangeHandler}
                 checked={task.status === TaskStatuses.Completed}
             />
-            <EditSpan title={task.title} changeTitle={changeTaskTitle} disabled={task.entityStatus==="loading"}/>
-            <IconButton onClick={onClickHandler} disabled={task.entityStatus==="loading"}><DeleteIcon/></IconButton>
+            <EditSpan title={task.title} changeTitle={changeTaskTitle} disabled={task.entityStatus === "loading"}/>
+            <IconButton onClick={onClickHandler} disabled={task.entityStatus === "loading"}><DeleteIcon/></IconButton>
         </div>
     );
 };

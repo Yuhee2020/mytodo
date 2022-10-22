@@ -1,13 +1,17 @@
 import {TodolistsType} from "../components/TodolistsList";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/api";
 import {
-    addTask,
-    addTodolist,
-    changeFilter, changeTaskEntityStatus, changeTaskStatus, changeTaskTitle, changeTodolistEntityStatus,
-    changeTodolistTitle,
-    removeTask,
-    removeTodolist,
-    todolistsReducer
+    addTaskTC,
+    addTodolistTC,
+    changeFilter,
+    changeTaskEntityStatus,
+    updateTaskTitleTC,
+    changeTodolistEntityStatus,
+    changeTodolistTitleTC,
+    removeTaskTC,
+    removeTodolistTC,
+    todolistsReducer,
+    updateTaskStatusTC
 } from "./todolistsReducer";
 
 let startState: TodolistsType = []
@@ -98,7 +102,7 @@ test("todolist should be added correctly", () => {
         addedDate: "20.07.1991",
         order: 0
     }
-    const endState=todolistsReducer(startState, addTodolist({todolist:newTodolist}))
+    const endState=todolistsReducer(startState, addTodolistTC.fulfilled({todolist:newTodolist},"",newTodolist.title))
     expect(endState.length).toBe(3)
     expect(endState[0].addedDate).toEqual(newTodolist.addedDate)
     expect(endState[0].filter).toEqual("all")
@@ -106,7 +110,7 @@ test("todolist should be added correctly", () => {
 
 test("todolist title should be changed correctly", () => {
 
-    const endState=todolistsReducer(startState, changeTodolistTitle({ todolistId:"123456789" , title: "New todolist title" }))
+    const endState=todolistsReducer(startState, changeTodolistTitleTC.fulfilled({ todolistId:"123456789" , title: "New todolist title" },"",{ todolistId:"123456789" , title: "New todolist title" }))
     expect(endState[0].title).toBe("New todolist title")
     expect(endState[1].title).toBe("what to by?")
     expect(endState.length).toBe(2)
@@ -114,7 +118,7 @@ test("todolist title should be changed correctly", () => {
 
 test("correct todolist should be deleted", () => {
 
-    const endState=todolistsReducer(startState, removeTodolist({ todolistId:"123456789",}))
+    const endState=todolistsReducer(startState, removeTodolistTC.fulfilled({ todolistId:"123456789"},"","123456789"))
     expect(endState[0].todolistId).toBe("987654321")
     expect(endState.length).toBe(1)
 })
@@ -129,7 +133,7 @@ test("filter of todolist should be changed correctly", () => {
 
 test("correct task of todolist should be deleted", () => {
 
-    const endState=todolistsReducer(startState, removeTask({ todolistId:"123456789", taskID:"12345"}))
+    const endState=todolistsReducer(startState, removeTaskTC.fulfilled({ todolistId:"123456789", taskID:"12345"},"",{ todolistId:"123456789", taskId:"12345"}))
     expect(endState[0].tasks.length).toBe(1)
     expect(endState[1].tasks.length).toBe(2)
     expect(endState[0].tasks[0].id).toBe("54321")
@@ -150,7 +154,7 @@ const newTask:TaskType= {
     addedDate: "string",
     entityStatus:"idle"
 }
-    const endState=todolistsReducer(startState, addTask({ task:newTask}))
+    const endState=todolistsReducer(startState, addTaskTC.fulfilled({task:newTask},"", {todolistId:newTask.todoListId, title:newTask.title}))
     expect(endState[0].tasks.length).toBe(3)
     expect(endState[1].tasks.length).toBe(2)
     expect(endState[0].tasks[0].id).toBe("5256082")
@@ -158,7 +162,7 @@ const newTask:TaskType= {
 
 test("task status should be changed correctly", () => {
 
-    const endState=todolistsReducer(startState, changeTaskStatus({  todolistId: "123456789", taskId:"12345", status: TaskStatuses.Completed }))
+    const endState=todolistsReducer(startState, updateTaskStatusTC.fulfilled({  todolistId: "123456789", taskId:"12345", status: TaskStatuses.Completed },"", {  todolistId: "123456789", taskId:"12345", status: TaskStatuses.Completed }))
     expect(endState[0].tasks[0].status).toBe(TaskStatuses.Completed)
     expect(endState[1].tasks[0].status).toBe(TaskStatuses.New)
     expect(endState[0].tasks[1].status).toBe(TaskStatuses.New)
@@ -167,7 +171,7 @@ test("task status should be changed correctly", () => {
 
 test("task title should be changed correctly", () => {
 
-    const endState=todolistsReducer(startState, changeTaskTitle({  todolistId: "123456789", taskId:"12345", title:"reading" }))
+    const endState=todolistsReducer(startState, updateTaskTitleTC.fulfilled({  todolistId: "123456789", taskId:"12345", title:"reading" },"",{  todolistId: "123456789", taskId:"12345", title:"reading" }))
     expect(endState[0].tasks[0].title).toBe("reading")
     expect(endState[1].tasks[0].title).toBe("bread")
     expect(endState[0].tasks[1].title).toBe("Learning React")

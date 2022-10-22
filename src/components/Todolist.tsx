@@ -25,7 +25,7 @@ export const Todolist = (props: PropsType) => {
     }, [])
 
     const addTask = (title: string) => {
-        dispatch(addTaskTC(props.todolist.todolistId, title))
+        dispatch(addTaskTC({todolistId:props.todolist.todolistId, title}))
     }
 
     const onClickAllHandler = () => {
@@ -41,7 +41,7 @@ export const Todolist = (props: PropsType) => {
         dispatch(removeTodolistTC(props.todolist.todolistId))
     }
     const changeTodolistTitle = (title: string) => {
-        dispatch(changeTodolistTitleTC(props.todolist.todolistId, title))
+        dispatch(changeTodolistTitleTC({todolistId:props.todolist.todolistId, title}))
     }
     let tasksForTodolist = props.todolist.tasks
     if (props.todolist.filter === "active") {

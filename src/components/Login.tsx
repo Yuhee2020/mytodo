@@ -65,9 +65,8 @@ const Login = () => {
             captcha: false
         },
         validate,
-        onSubmit: values => {
+        onSubmit: async (values) => {
             dispatch(loginTC(values))
-            formik.resetForm()
         },
     });
     if (isLoggedIn) {
