@@ -53,8 +53,7 @@ export const TodolistsList = () => {
                 spacing={3}
                 container
                 direction="row"
-                justifyContent="space-evenly"
-                alignItems="baseline"
+                flexWrap="nowrap"
             >
 
                 {todolists.map(tl => {
