@@ -1,10 +1,10 @@
 import React, {KeyboardEvent, useState} from 'react';
-import {TextField} from "@mui/material";
+import {TextField, Tooltip} from "@mui/material";
 
 type PropsType = {
     title: string
     changeTitle: (title: string) => void
-    disabled:boolean
+    disabled: boolean
 }
 
 export const EditSpan = (props: PropsType) => {
@@ -22,7 +22,7 @@ export const EditSpan = (props: PropsType) => {
 
     return edit && !props.disabled
         ? <TextField
-            style={{width:"198px"}}
+            style={{width: "198px"}}
             onChange={(e) => setNewTitle(e.currentTarget.value)}
             value={newTitle}
             autoFocus
@@ -30,6 +30,7 @@ export const EditSpan = (props: PropsType) => {
             onKeyPress={onKeyPressHandler}
             size='small'
             color='success'/>
-        : <span onDoubleClick={setEditMode}>{props.title}</span>
+        : (<Tooltip title="Double click to edit" placement={"left"} arrow><span
+            onDoubleClick={setEditMode}>{props.title}</span></Tooltip>)
 };
 

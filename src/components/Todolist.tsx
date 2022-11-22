@@ -22,7 +22,7 @@ export const Todolist = (props: PropsType) => {
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(getTasksTC(props.todolist.todolistId))
-    }, [])
+    }, [dispatch,props.todolist.todolistId])
 
     const addTask = (title: string) => {
         dispatch(addTaskTC({todolistId:props.todolist.todolistId, title}))
@@ -52,7 +52,9 @@ export const Todolist = (props: PropsType) => {
     }
     return (
         <div style={{width: "280px"}}>
-            <h3 style={{textAlign:"center"}}><EditSpan title={props.todolist.title} changeTitle={changeTodolistTitle}
+            <h3 style={{textAlign:"center"}}>
+                <EditSpan title={props.todolist.title}
+                          changeTitle={changeTodolistTitle}
                           disabled={props.todolist.entityStatus === "loading"}/>
                 <IconButton onClick={removeTodolist} disabled={props.todolist.entityStatus === "loading"}><DeleteIcon/></IconButton>
             </h3>

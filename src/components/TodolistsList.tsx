@@ -30,7 +30,7 @@ export const TodolistsList = () => {
     useEffect(() => {
         if (!isLoggedIn){return}
         dispatch(getTodolistsTC())
-    }, [])
+    }, [dispatch, isLoggedIn])
 
     const todolists = useSelector<StateType, TodolistsType>(state => state.todolists)
 
@@ -53,7 +53,8 @@ export const TodolistsList = () => {
                 spacing={3}
                 container
                 direction="row"
-                flexWrap="nowrap"
+                justifyContent="space-evenly"
+                alignItems="baseline"
             >
 
                 {todolists.map(tl => {
