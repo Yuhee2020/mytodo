@@ -1,5 +1,5 @@
-# Social Network
-
+# MyToDo
+###Task control application
 This project was created with [Create React App](https://github.com/facebook/create-react-app).
 
 ## The following libraries are installed in this project
